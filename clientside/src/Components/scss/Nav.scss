@@ -1,0 +1,126 @@
+*{
+    margin: 0;
+    padding: 0;
+}
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 20px;
+    background-color: #2c3e50;
+    color: white;
+  
+    .navbar-left {
+      .logo {
+        font-size: 24px;
+        font-weight: bold;
+      }
+    }
+  
+    .navbar-center {
+      display: flex;
+      align-items: center;
+  
+      .serch-input {
+        padding: 8px;
+        border: none;
+        border-radius: 5px;
+        width: 300px;
+        outline: none;
+        text-align: center;
+      }
+  
+      .serch-btn {
+        margin-left: 5px;
+        background: transparent;
+        border: none;
+        cursor: pointer;
+  
+        img {
+          width: 20px;
+          height: 20px;
+        }
+      }
+    }
+  
+    .navbar-right {
+      display: flex;
+      align-items: center;
+  
+      .menu-item {
+        margin: 0 10px;
+        text-decoration: none;
+        color: white;
+        font-weight: 500;
+  
+        &:hover {
+          text-decoration: underline;
+        }
+      }
+  
+      .drop-down {
+        position: relative;
+  
+        .dropdown-btn {
+          background: transparent;
+          border: none;
+          color: white;
+          font-size: 16px;
+          cursor: pointer;
+        }
+  
+        .dropdown-content {
+          display: none;
+          position: absolute;
+          background-color: white;
+          min-width: 120px;
+          box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.2);
+          border-radius: 5px;
+          overflow: hidden;
+  
+          a, button {
+            color: black;
+            padding: 10px;
+            text-decoration: none;
+            display: block;
+            width: 100%;
+            text-align: left;
+            background: none;
+            border: none;
+            cursor: pointer;
+  
+            &:hover {
+              background-color: #f1f1f1;
+            }
+          }
+        }
+  
+        &:hover .dropdown-content {
+          display: block;
+        }
+      }
+    }
+  }
+  
+  @media (max-width: 768px) {
+    .navbar {
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+  
+      .navbar-center {
+        margin: 10px 0;
+  
+        .serch-input {
+          width: 100%;
+        }
+      }
+  
+      .navbar-right {
+        flex-direction: column;
+        .menu-item {
+          margin: 5px 0;
+        }
+      }
+    }
+  }

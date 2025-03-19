@@ -1,0 +1,96 @@
+.home-page {
+    padding: 20px;
+    text-align: center;
+  
+    h2 {
+      font-size: 2rem;
+      margin-bottom: 20px;
+      color: #333;
+    }
+  
+    .categories {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      margin-bottom: 20px;
+  
+      .category-button {
+        background: #2c3e50;
+        color: white;
+        border: none;
+        padding: 10px 15px;
+        margin: 5px;
+        border-radius: 5px;
+        cursor: pointer;
+        transition: background 0.3s ease;
+  
+        &:hover {
+          background: #2c3e50;
+        }
+  
+        &.active {
+          background: #28a745;
+        }
+      }
+  
+      .clear-filter-button {
+        background: #dc3545;
+        color: white;
+        border: none;
+        padding: 10px 15px;
+        margin: 5px;
+        border-radius: 5px;
+        cursor: pointer;
+        transition: background 0.3s ease;
+  
+        &:hover {
+          background: #b52b38;
+        }
+      }
+    }
+  
+    .product-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      gap: 20px;
+      padding: 20px;
+  
+      .product-item {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        text-decoration: none;
+        color: #333;
+        background: #f8f9fa;
+        padding: 15px;
+        border-radius: 8px;
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+  
+        &:hover {
+          transform: scale(1.05);
+          box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        }
+  
+        .product-thumbnail {
+          width: 100%;
+          height: 200px;
+          object-fit: cover;
+          border-radius: 5px;
+          margin-bottom: 10px;
+        }
+  
+        .product-name {
+          font-size: 1.5rem;
+          font-weight: bold;
+        }
+        .product-author{
+            font-size: 1rem;
+            font-weight: bold;
+        }
+        .pro-quantity{
+            color: red;
+        }
+      }
+    }
+  }
+  
