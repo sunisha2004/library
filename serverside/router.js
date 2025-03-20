@@ -18,11 +18,11 @@ router.route("/book").post(Auth, rh.bookBook);
 router.route('/book/:bookId/reserve').post(Auth, rh.reserveBook);
 
 
-// router.route("/booking/history").get(Auth, rh.getBookingHistory);
-// router.route("/orders").get(Auth, rh.getOrder);
-// router.route('/orders/:orderId/confirm').put(Auth, rh.confirmOrder);
-// router.route('/book/:bookId/return').put(Auth, rh.returnBook);  // Returns a book
-// router.route('/orders/:orderId/return').put(Auth, rh.returnOrder);  // Returns an order
+router.route("/booking/history").get(Auth, rh.getBookingHistory);
+router.route("/orders").get(Auth, rh.getOrder);
+router.route('/orders/:orderId/confirm').put(Auth, rh.confirmOrder);
+router.route('/book/:bookId/return').put(Auth, rh.returnBook);  // Returns a book
+router.route('/orders/:orderId/return').put(Auth, rh.returnOrder);  // Returns an order
 
 
 

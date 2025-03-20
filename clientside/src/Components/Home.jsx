@@ -19,7 +19,6 @@
 
 // const Home = ({ name }) => {
 //   const token = localStorage.getItem("token");
-
 //   const [books, setBooks] = useState([]);
 //   const [selectedCategory, setSelectedCategory] = useState("");
 
@@ -44,66 +43,64 @@
 //     const matchesName = book.name
 //       ?.toLowerCase()
 //       .includes(name?.toLowerCase() || "");
-//     return matchesCategory || matchesName;
+
+//     return matchesCategory && matchesName; // Changed `||` to `&&`
 //   });
 
 //   return (
-//     <>
-//       <div className="home-page">
-//         <h2>All Books</h2>
-//         <div className="categories">
-//           {categories.map((category) => (
-//             <button
-//               key={category}
-//               className={`category-button ${
-//                 selectedCategory === category ? "active" : ""
-//               }`}
-//               onClick={() => setSelectedCategory(category)}
-//             >
-//               {category}
-//             </button>
-//           ))}
-//           {selectedCategory && (
-//             <button
-//               className="clear-filter-button"
-//               onClick={() => setSelectedCategory("")}
-//             >
-//               Clear Filter
-//             </button>
-//           )}
-//         </div>
+//     <div className="home-page">
+//       <h2>All Books</h2>
+//       <div className="categories">
+//         {categories.map((category) => (
+//           <button
+//             key={category}
+//             className={`category-button ${
+//               selectedCategory === category ? "active" : ""
+//             }`}
+//             onClick={() => setSelectedCategory(category)}
+//           >
+//             {category}
+//           </button>
+//         ))}
+//         {selectedCategory && (
+//           <button
+//             className="clear-filter-button"
+//             onClick={() => setSelectedCategory("")}
+//           >
+//             Clear Filter
+//           </button>
+//         )}
+//       </div>
 
-//         {filteredbooks.length > 0 ? (
-//           <div className="product-grid">
-//             {filteredbooks.map((book) => (
-//                 key={book._id}
-//                 className="product-item"
-              
-//                 <Link to={`/book/${book._id}`}>
+//       {filteredbooks.length > 0 ? (
+//         <div className="product-grid">
+//           {filteredbooks.map((book) => (
+//             <div key={book._id} className="product-item">
+//               <Link to={`/book/${book._id}`}>
 //                 <img
 //                   src={book.thumbnail}
 //                   alt={book.name}
 //                   className="product-thumbnail"
 //                 />
-//                 </Link>
-               
-//                 <span className="product-name">{book.name}</span>
-//                 <span className="product-author">{book.author}</span>
-//                 <span className="pro-quantity">{book.quantity} books Available now</span>
-//                 <br />
-//                 <br />
 //               </Link>
-//             ))}
-//           </div>
-//         ) : (
-//           <p>No products found.</p>
-//         )}
-//       </div>
-//     </>
+//               <span className="product-name">{book.name}</span>
+//               <span className="product-author">{book.author}</span>
+//               <span className="pro-quantity">
+//                 {book.quantity} books Available now
+//               </span>
+//             </div>
+//           ))}
+//         </div>
+//       ) : (
+//         <p>No products found.</p>
+//       )}
+//     </div>
 //   );
 // };
 
 // export default Home;
+
+
 import React, { useEffect, useState } from "react";
 import "./scss/Home.scss";
 import axios from "axios";
@@ -123,7 +120,8 @@ const categories = [
   "History",
 ];
 
-const Home = ({ name }) => {
+const Home = ({ name = "" }) => { 
+
   const token = localStorage.getItem("token");
   const [books, setBooks] = useState([]);
   const [selectedCategory, setSelectedCategory] = useState("");
@@ -143,39 +141,30 @@ const Home = ({ name }) => {
     fetchBooks();
   }, [token]);
 
-  const filteredbooks = books.filter((book) => {
-    const matchesCategory =
-      !selectedCategory || book.category === selectedCategory;
-    const matchesName = book.name
-      ?.toLowerCase()
-      .includes(name?.toLowerCase() || "");
-
-    return matchesCategory && matchesName; // Changed `||` to `&&`
-  });
+  const filteredbooks = books
+    .filter((book) => {
+      const bookName = book.name ? book.name.toLowerCase() : "";
+      const bookAuthor = book.author ? book.author.toLowerCase() : "";
+      return bookName.includes(name.toLowerCase()) || bookAuthor.includes(name.toLowerCase());
+    })
+    .filter((book) =>
+      selectedCategory ? book.category?.toLowerCase() === selectedCategory.toLowerCase() : true
+    );
 
   return (
     <div className="home-page">
       <h2>All Books</h2>
       <div className="categories">
+        <button className='category-button' onClick={() => setSelectedCategory("")}>All</button>
         {categories.map((category) => (
           <button
             key={category}
-            className={`category-button ${
-              selectedCategory === category ? "active" : ""
-            }`}
+            className={`category-button ${selectedCategory === category ? "active" : ""}`}
             onClick={() => setSelectedCategory(category)}
           >
             {category}
           </button>
         ))}
-        {selectedCategory && (
-          <button
-            className="clear-filter-button"
-            onClick={() => setSelectedCategory("")}
-          >
-            Clear Filter
-          </button>
-        )}
       </div>
 
       {filteredbooks.length > 0 ? (
@@ -198,7 +187,7 @@ const Home = ({ name }) => {
           ))}
         </div>
       ) : (
-        <p>No products found.</p>
+        <p>No books found.</p>
       )}
     </div>
   );

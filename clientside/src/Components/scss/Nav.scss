@@ -1,126 +1,131 @@
-*{
-    margin: 0;
-    padding: 0;
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
+
 .navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 20px;
+  background-color: #2c3e50; // Dark blue-gray color
+  color: white;
+
+  .navbar-left {
+    .logo {
+      font-size: 24px;
+      font-weight: bold;
+    }
+  }
+
+  .navbar-center {
     display: flex;
-    justify-content: space-between;
     align-items: center;
-    padding: 10px 20px;
-    background-color: #2c3e50;
-    color: white;
-  
-    .navbar-left {
-      .logo {
-        font-size: 24px;
-        font-weight: bold;
+
+    .search-input {
+      padding: 8px;
+      border: none;
+      border-radius: 5px;
+      width: 300px;
+      outline: none;
+      text-align: center;
+      font-size: 14px;
+      background-color: #ecf0f1; // Light gray background
+      color: #2c3e50; // Text color dark
+
+      &::placeholder {
+        color: #7f8c8d; // Grayish placeholder
       }
     }
-  
-    .navbar-center {
-      display: flex;
-      align-items: center;
-  
-      .serch-input {
-        padding: 8px;
-        border: none;
-        border-radius: 5px;
-        width: 300px;
-        outline: none;
-        text-align: center;
+  }
+
+  .navbar-right {
+    display: flex;
+    align-items: center;
+
+    .menu-item {
+      margin: 0 10px;
+      text-decoration: none;
+      color: white;
+      font-weight: 500;
+      transition: color 0.3s ease;
+
+      &:hover {
+        color: #f39c12; // Highlight color (orange shade)
+        text-decoration: underline;
       }
-  
-      .serch-btn {
-        margin-left: 5px;
+    }
+
+    .drop-down {
+      position: relative;
+
+      .dropdown-btn {
         background: transparent;
         border: none;
-        cursor: pointer;
-  
-        img {
-          width: 20px;
-          height: 20px;
-        }
-      }
-    }
-  
-    .navbar-right {
-      display: flex;
-      align-items: center;
-  
-      .menu-item {
-        margin: 0 10px;
-        text-decoration: none;
         color: white;
-        font-weight: 500;
-  
-        &:hover {
-          text-decoration: underline;
-        }
+        font-size: 16px;
+        cursor: pointer;
       }
-  
-      .drop-down {
-        position: relative;
-  
-        .dropdown-btn {
-          background: transparent;
+
+      .dropdown-content {
+        display: none;
+        position: absolute;
+        right: 0;
+        background-color: white;
+        min-width: 150px;
+        box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.2);
+        border-radius: 5px;
+        overflow: hidden;
+        z-index: 10;
+
+        a,
+        button {
+          color: black;
+          padding: 10px;
+          text-decoration: none;
+          display: block;
+          width: 100%;
+          text-align: left;
+          background: none;
           border: none;
-          color: white;
-          font-size: 16px;
           cursor: pointer;
-        }
-  
-        .dropdown-content {
-          display: none;
-          position: absolute;
-          background-color: white;
-          min-width: 120px;
-          box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.2);
-          border-radius: 5px;
-          overflow: hidden;
-  
-          a, button {
-            color: black;
-            padding: 10px;
-            text-decoration: none;
-            display: block;
-            width: 100%;
-            text-align: left;
-            background: none;
-            border: none;
-            cursor: pointer;
-  
-            &:hover {
-              background-color: #f1f1f1;
-            }
+          transition: background-color 0.3s ease;
+
+          &:hover {
+            background-color: #f1f1f1;
           }
         }
-  
-        &:hover .dropdown-content {
-          display: block;
-        }
+      }
+
+      &:hover .dropdown-content {
+        display: block;
       }
     }
   }
-  
-  @media (max-width: 768px) {
-    .navbar {
+}
+
+// Responsive Design for Mobile
+@media (max-width: 768px) {
+  .navbar {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+
+    .navbar-center {
+      margin: 10px 0;
+
+      .search-input {
+        width: 100%;
+      }
+    }
+
+    .navbar-right {
       flex-direction: column;
-      align-items: center;
-      text-align: center;
-  
-      .navbar-center {
-        margin: 10px 0;
-  
-        .serch-input {
-          width: 100%;
-        }
-      }
-  
-      .navbar-right {
-        flex-direction: column;
-        .menu-item {
-          margin: 5px 0;
-        }
+
+      .menu-item {
+        margin: 5px 0;
       }
     }
   }
+}

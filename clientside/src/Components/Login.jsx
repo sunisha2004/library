@@ -55,7 +55,7 @@ const Login = () => {
                     <button type="submit" className="login-button">Login</button>
                 </form>
                 <div className="login-options">
-                    <Link to="/forgot-password" className="forgot-link">Forgot Password?</Link>
+                    <Link to="/verifyemail" className="forgot-link">Forgot Password?</Link>
                     <p>Don't have an account? <Link to="/emailverify" className="register-link">Register</Link></p>
                 </div>
             </div>

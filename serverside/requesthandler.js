@@ -105,7 +105,7 @@ export async function verifyEmail(req, res) {
            <p style="color: #555; font-size: 16px;">
              Hi there! Click the button below to verify your email address and complete the registration process.
            </p>
-           <a href="http://localhost:5173/resetPassword" style="
+           <a href="http://localhost:5173/resetpassword" style="
              display: inline-block; 
              margin-top: 20px; 
              padding: 10px 20px; 
@@ -363,7 +363,7 @@ export const reserveBook = async (req, res) => {
             bookID: bookId,
             issueDate,
             returnDate,
-            status: true, 
+            status: "Booked", 
         });
 
         await newReservation.save();
@@ -417,7 +417,7 @@ export const getBookingHistory = async (req, res) => {
                     thumbnail: book?.thumbnail || "https://via.placeholder.com/100", 
                     issueDate: reservation.issueDate,
                     returnDate: reservation.returnDate,
-                    status: reservation.status ? "Booked" : "Returned",
+                    status: reservation.status,
                 };
             })
         );
