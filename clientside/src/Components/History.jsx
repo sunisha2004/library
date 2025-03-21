@@ -11,7 +11,6 @@ const History = () => {
     fetchHistory();
   }, []);
 
-  // ✅ Fetch booking history
   const fetchHistory = async () => {
     try {
       setLoading(true);
@@ -47,7 +46,7 @@ const History = () => {
                 <small>Issued: {new Date(item.issueDate).toDateString()}</small> |
                 <small> Return: {new Date(item.returnDate).toDateString()}</small> |
                 <small className={`status ${item.status === "Booked" ? "active" : "returned"}`}>
-                  {item.status === "Booked" ? "Booked" : "Returned"}
+                  {item.status}
                 </small>
               </div>
             </li>

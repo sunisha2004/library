@@ -2,7 +2,6 @@ import jwt from 'jsonwebtoken';
 import userSchema from './Models/user.model.js';
 import bookSchema from './Models/book.model.js'
 import orderSchema from './Models/order.model.js'
-// import issueSchema from './Models/issue.model.js'
 import Issue from "./models/issue.model.js"; 
 import { validationResult } from "express-validator";
 import nodemailer from "nodemailer";
@@ -342,7 +341,8 @@ export async function bookBook(req, res) {
 export const reserveBook = async (req, res) => {
     try {
         const { bookId } = req.params;
-        const userId = req.user.id; 
+        const userId = req.user.UserID; 
+        
 
         const book = await bookSchema.findById(bookId);
         if (!book) {
@@ -399,7 +399,7 @@ export const reserveBook = async (req, res) => {
 
 export const getBookingHistory = async (req, res) => {
     try {
-        const userId = req.user.id; 
+        const userId = req.user.UserID; 
 
         const reservations = await Issue.find({ UserID: userId });
 
@@ -433,7 +433,8 @@ export const getBookingHistory = async (req, res) => {
 export async function getOrder(req, res) {
   try {
     const orders = await orderSchema.find({ sellerID: req.user.UserID });
-
+    console.log(orders);
+    
     if (!orders.length) {
       return res.status(404).json({ msg: "No orders found for this seller." });
     }
@@ -441,18 +442,17 @@ export async function getOrder(req, res) {
     const detailedOrders = await Promise.all(
       orders.map(async (item) => {
         const book = await bookSchema.findById(item.bookID);
-        const buyer = await userSchema.findById(item.buyerID);
-
+        const issue = await Issue.findOne({ bookID: item.bookID, UserID: item.buyerID });
+        console.log(issue);
         return {
           _id: item._id, // Ensure ID is returned
-          buyername: buyer ? buyer.username : "Unknown Buyer",
           bookname: book ? book.name : "Unknown Book",
           bookID: item.bookID,
           confirm: item.confirm, // Make sure confirm status is included
+          status:issue.status
         };
       })
     );
-
     res.status(200).json(detailedOrders);
   } catch (error) {
     console.error("Error fetching orders:", error);
@@ -516,6 +516,9 @@ export const returnOrder = async (req, res) => {
     try {
         const { orderId } = req.params;
         const order = await orderSchema.findById(orderId);
+        console.log(order.bookID,order.buyerID);
+        
+        
         if (!order) {
             console.error(`Order not found for ID: ${orderId}`);
             return res.status(404).json({ message: "Order not found." });
@@ -523,12 +526,11 @@ export const returnOrder = async (req, res) => {
 
         console.log(`Order found:`, order);
 
-        order.status = "Returned";  
-        await order.save();
-
         console.log(`Order ${orderId} marked as returned.`);
 
-        const issueRecord = await Issue.findOne({ bookID: order.bookID, UserID: order.userID });
+        const issueRecord = await Issue.findOne({ bookID: order.bookID, UserID: order.buyerID });
+        console.log(issueRecord);
+        
 
         if (issueRecord) {
             issueRecord.status = "Returned";
@@ -545,31 +547,3 @@ export const returnOrder = async (req, res) => {
         res.status(500).json({ message: "Internal server error", error: error.message });
     }
 };
-
-
-// export default async function getOrderFromReaderToPublisher(buyerID, sellerID) {
-//     try {
-//         // Fetch the order details based on buyerID and sellerID
-//         const order = await orderSchema.findOne({ buyerID, sellerID });
-
-//         if (!order) {
-//             throw new Error("Order not found");
-//         }
-
-//         // Fetch the issue details based on the bookID and userID (buyerID)
-//         const issue = await Issue.findOne({ UserID: buyerID, bookID: order.bookID });
-
-//         if (!issue) {
-//             throw new Error("Issue not found");
-//         }
-
-//         // Return the order and issue details
-//         return {
-//             order,
-//             issue
-//         };
-//     } catch (error) {
-//         console.error("Error fetching order details:", error);
-//         throw error;
-//     }
-// }

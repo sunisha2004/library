@@ -17,6 +17,8 @@ const Order = () => {
                     headers: { Authorization: `Bearer ${token}` }
                 });
                 setOrders(response.data);
+                console.log(response.data);
+                
             } catch (err) {
                 console.log("Failed to fetch orders:", err);
             } finally {
@@ -77,7 +79,7 @@ const Order = () => {
                                 <button 
                                     className="confirm-btn" 
                                     onClick={() => handleConfirm(order._id)} 
-                                    disabled={clickedButtons[order._id] === 'confirm' || order.status === "Confirmed"}
+                                    disabled={clickedButtons[order._id] === 'confirm' || order.confirm === true}
                                 >
                                     Confirm Order
                                 </button>
